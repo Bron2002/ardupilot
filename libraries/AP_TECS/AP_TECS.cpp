@@ -957,7 +957,8 @@ void AP_TECS::_update_pitch(void)
     }
 
     // Constrain pitch demand
-    _pitch_dem = constrain_float(_pitch_dem_unc, _PITCHminf, _PITCHmaxf);
+//    _pitch_dem = constrain_float(_pitch_dem_unc, _PITCHminf, _PITCHmaxf);
+    _pitch_dem = _pitch_dem_unc;
 
     // Rate limit the pitch demand to comply with specified vertical
     // acceleration limit

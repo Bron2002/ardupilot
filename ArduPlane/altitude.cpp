@@ -124,7 +124,7 @@ void Plane::setup_glide_slope(void)
         // is basically to prevent situations where we try to slowly
         // gain height at low altitudes, potentially hitting
         // obstacles.
-        if (adjusted_relative_altitude_cm() > 2000 || above_location_current(next_WP_loc)) {
+        if (adjusted_relative_altitude_cm() > 2000 || above_location_current(next_WP_loc) || true) {
             set_offset_altitude_location(prev_WP_loc, next_WP_loc);
         } else {
             reset_offset_altitude();

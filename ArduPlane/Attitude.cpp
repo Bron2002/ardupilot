@@ -705,7 +705,8 @@ void Plane::calc_nav_pitch()
         commanded_pitch = plane.guided_state.forced_rpy_cd.y;
     }
 
-    nav_pitch_cd = constrain_int32(commanded_pitch, pitch_limit_min_cd, aparm.pitch_limit_max_cd.get());
+//    nav_pitch_cd = constrain_int32(commanded_pitch, pitch_limit_min_cd, aparm.pitch_limit_max_cd.get());
+    nav_pitch_cd = commanded_pitch;
 }
 
 

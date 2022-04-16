@@ -461,12 +461,15 @@ void AP_TECS::_update_speed_demand(void)
     _TAS_dem_adj = constrain_float(_TAS_dem_adj, _TASmin, _TASmax);
 }
 
+/**
+ * todo: here is constraints of climbing and sinking rate!!!
+ */
 void AP_TECS::_update_height_demand(void)
 {
     // Apply 2 point moving average to demanded height
     _hgt_dem = 0.5f * (_hgt_dem + _hgt_dem_in_old);
     _hgt_dem_in_old = _hgt_dem;
-
+/*
     float max_sink_rate = _maxSinkRate;
     if (_maxSinkRate_approach > 0 && _flags.is_doing_auto_land) {
         // special sink rate for approach to accommodate steep slopes and reverse thrust.
@@ -478,6 +481,7 @@ void AP_TECS::_update_height_demand(void)
     }
 
     // Limit height rate of change
+
     if ((_hgt_dem - _hgt_dem_prev) > (_maxClimbRate * 0.1f))
     {
         _hgt_dem = _hgt_dem_prev + _maxClimbRate * 0.1f;
@@ -485,7 +489,7 @@ void AP_TECS::_update_height_demand(void)
     else if ((_hgt_dem - _hgt_dem_prev) < (-max_sink_rate * 0.1f))
     {
         _hgt_dem = _hgt_dem_prev - max_sink_rate * 0.1f;
-    }
+    }*/
     _hgt_dem_prev = _hgt_dem;
 
     // Apply first order lag to height demand
@@ -547,7 +551,8 @@ void AP_TECS::_update_height_demand(void)
         hgt_dem_lag_filter_slew = 0;
     }
     _hgt_dem_adj_last = _hgt_dem_adj;
-    _hgt_dem_adj = new_hgt_dem;
+//    _hgt_dem_adj = new_hgt_dem;
+_hgt_dem_adj = _hgt_dem;
 }
 
 void AP_TECS::_detect_underspeed(void)
@@ -968,7 +973,7 @@ void AP_TECS::_update_pitch(void)
     }
 
     // re-constrain pitch demand
-    _pitch_dem = constrain_float(_pitch_dem, _PITCHminf, _PITCHmaxf);
+//    _pitch_dem = constrain_float(_pitch_dem, _PITCHminf, _PITCHmaxf);
 
     _last_pitch_dem = _pitch_dem;
 }
@@ -1019,7 +1024,9 @@ void AP_TECS::_update_STE_rate_lim(void)
     _STEdot_min = - _minSinkRate * GRAVITY_MSS;
 }
 
-
+/**
+ * todo: here is probably constraints.
+ */
 void AP_TECS::update_pitch_throttle(int32_t hgt_dem_cm,
                                     int32_t EAS_dem_cm,
                                     enum AP_Vehicle::FixedWing::FlightStage flight_stage,
